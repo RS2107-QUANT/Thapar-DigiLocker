@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: thapar-digilocker
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: python serve.py
+    healthCheckPath: /health
+    disk:
+      name: digilocker-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.4
+      - key: DATA_DIR
+        value: /var/data
+      - key: SECRET_KEY
+        generateValue: true
+      - key: COOKIE_SECURE
+        value: "1"
+      - key: SEED_DEMO
+        value: "0"
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: GATE_PASSWORD
+        sync: false
